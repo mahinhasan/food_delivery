@@ -1,4 +1,4 @@
-name: Django CI/CD
+name: Django CI
 
 on:
   push:
@@ -11,6 +11,21 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: food_delivery
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: Mahin@db
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -30,8 +45,8 @@ jobs:
           cd food_delivery
           python3 manage.py migrate
 
-      - name: Run server
+      - name: Run tests
         run: |
           cd food_delivery
-          python3 manage.py runserver
+          python3 manage.py test
 
