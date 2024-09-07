@@ -1,14 +1,24 @@
 # Food Delivery API
 
-This is a Django REST Framework-based API for a food delivery service. The API allows you to manage restaurants, categories, menu items, and orders.
+This project is a backend API for a food delivery company. It manages restaurants, categories, menu items, and orders. The API also supports user authentication, role-based access, and CRUD operations for the various resources.
 
 ## Features
 
-- User registration and login with token authentication.
-- Role-based permissions for restaurant owners and employees.
-- API for managing restaurant categories and menu items.
-- API for placing orders with support for card and cash payments.
-- Swagger API documentation for easy testing and interaction.
+- User registration and login with token-based authentication
+- Role-based access control (Owners, Employees)
+- Restaurant, Category, Menu Item, and Order management
+- Token-based authentication using Django REST Framework
+
+## Requirements
+
+- Python 3.8+
+- Django 5.1+
+- Django REST Framework
+- drf-yasg (for API documentation)
+- Django REST Framework Token Authentication
+- Postman (optional, for API testing)
+
+## Installation
 
 ## Setup
 
