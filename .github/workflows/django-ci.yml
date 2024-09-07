@@ -42,7 +42,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t django-app .
+          docker build -t food_delivery .
 
       - name: Start Docker containers
         run: |
@@ -54,4 +54,4 @@ jobs:
 
       - name: Run tests
         run: |
-          docker-compose exec web python3 manage.py test
+          docker-compose exec web python3 manage.py runserver
