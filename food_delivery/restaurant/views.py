@@ -10,6 +10,8 @@ from .models import User, Category, MenuItem,Restaurant
 from .permissions import IsOwnerOrEmployee, IsRestaurantUser
 
 
+
+# user resitrations api
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
@@ -21,6 +23,7 @@ def register(request):
     return Response(serializer.errors, status=400)
 
 
+# login api
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login(request):
@@ -35,6 +38,8 @@ def login(request):
     return Response({"error": "Invalid credentials"}, status=400)
 
 
+
+# creat category list api
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def category_list_create(request):
@@ -52,7 +57,7 @@ def category_list_create(request):
 
 
 
-
+# create menu item api
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def menu_item_list_create(request):
@@ -68,6 +73,7 @@ def menu_item_list_create(request):
         return Response(serializer.errors, status=400)
 
 
+# create direct order foot api using payment 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_order(request):
@@ -78,6 +84,7 @@ def create_order(request):
     return Response(serializer.errors, status=400)
 
 
+# create and list food resturant api
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def restaurant_list_create(request):
@@ -94,6 +101,7 @@ def restaurant_list_create(request):
         return Response(serializer.errors, status=400)
 
 
+# restaurant details,update,delete api
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def restaurant_detail(request, pk):

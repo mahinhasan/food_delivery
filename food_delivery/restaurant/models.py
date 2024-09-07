@@ -3,13 +3,14 @@ from django.db import models
 
 
 
-
+# abstruct user is built in user modify to add extra field for authentication
 class User(AbstractUser):
     is_owner = models.BooleanField(default=False)
     is_employee = models.BooleanField(default=False)
     restaurant = models.ForeignKey('Restaurant', on_delete=models.SET_NULL, null=True, blank=True)
   
 
+# name of the restaurant
 class Restaurant(models.Model):
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=255)
@@ -18,6 +19,7 @@ class Restaurant(models.Model):
     def __str__(self):
         return self.name
 
+# category model - food category
 class Category(models.Model):
     name = models.CharField(max_length=100)
     restaurant = models.ForeignKey(Restaurant, related_name='categories', on_delete=models.CASCADE)
@@ -25,6 +27,8 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
+# menu items of food
 class MenuItem(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
