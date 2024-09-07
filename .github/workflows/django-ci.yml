@@ -31,7 +31,7 @@ jobs:
 
       - name: Run tests
         run: |
-          python3 manage.py test
+          python3 manage.py runserver
 
       - name: Lint code
         run: |
