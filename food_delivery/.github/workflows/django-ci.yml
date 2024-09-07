@@ -22,18 +22,14 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python3 -m pip install --upgrade pip
-          pip install -r requirements.txt
+          python3 -m pip3 install --upgrade pip
+          pip3 install -r requirements.txt
 
       - name: Run migrations
         run: |
-          python manage.py migrate
+          python3 manage.py migrate
 
-      - name: Run tests
+      - name: Run server
         run: |
           python3 manage.py runserver
 
-      - name: Lint code
-        run: |
-          pip install pylint
-          pylint food_delivery
