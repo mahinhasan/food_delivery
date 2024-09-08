@@ -56,6 +56,30 @@ def category_list_create(request):
         return Response(serializer.errors, status=400)
 
 
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def category_detail(request, pk):
+    try:
+        category = Category.objects.get(pk=pk, restaurant=request.user.restaurant)
+    except Category.DoesNotExist:
+        return Response({"error": "Category not found"}, status=404)
+
+    if request.method == 'GET':
+        serializer = CategorySerializer(category)
+        return Response(serializer.data)
+    
+    elif request.method == 'PUT':
+        serializer = CategorySerializer(category, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+    
+    elif request.method == 'DELETE':
+        category.delete()
+        return Response(status=204)
+
+
 
 # create menu item api
 @api_view(['GET', 'POST'])
@@ -73,6 +97,30 @@ def menu_item_list_create(request):
         return Response(serializer.errors, status=400)
 
 
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def menu_item_detail(request, pk):
+    try:
+        menu_item = MenuItem.objects.get(pk=pk, category__restaurant=request.user.restaurant)
+    except MenuItem.DoesNotExist:
+        return Response({"error": "Menu item not found"}, status=404)
+
+    if request.method == 'GET':
+        serializer = MenuItemSerializer(menu_item)
+        return Response(serializer.data)
+    
+    elif request.method == 'PUT':
+        serializer = MenuItemSerializer(menu_item, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+    
+    elif request.method == 'DELETE':
+        menu_item.delete()
+        return Response(status=204)
+
+
 # create direct order foot api using payment 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -82,6 +130,30 @@ def create_order(request):
         serializer.save(customer=request.user)
         return Response(serializer.data, status=201)
     return Response(serializer.errors, status=400)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def order_detail(request, pk):
+    try:
+        order = Order.objects.get(pk=pk, customer=request.user)
+    except Order.DoesNotExist:
+        return Response({"error": "Order not found"}, status=404)
+
+    if request.method == 'GET':
+        serializer = OrderSerializer(order)
+        return Response(serializer.data)
+    
+    elif request.method == 'PUT':
+        serializer = OrderSerializer(order, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+    
+    elif request.method == 'DELETE':
+        order.delete()
+        return Response(status=204)
 
 
 # create and list food resturant api
